@@ -2,15 +2,15 @@ module ChatBusiness {
     requires javafx.controls;
     requires javafx.fxml;
 
-    opens com.business to javafx.fxml;
-    exports com.business;
+    opens com.business.client to javafx.fxml;
+    exports com.business.client;
 
-    opens com.business.controller to javafx.fxml;
-    exports com.business.controller;
+    opens com.business.client.controller to javafx.fxml;
+    exports com.business.client.controller;
 
-    opens com.business.model to javafx.fxml;
-    exports com.business.model;
+    opens com.business.client.model to javafx.fxml;
+    exports com.business.client.model;
 
-    opens com.business.view to javafx.fxml;
-    exports com.business.view;
+    opens com.business.client.view to javafx.fxml;
+    exports com.business.client.view;
 }
