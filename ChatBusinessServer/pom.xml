@@ -36,7 +36,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.business.server.Main
+                                com.business.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

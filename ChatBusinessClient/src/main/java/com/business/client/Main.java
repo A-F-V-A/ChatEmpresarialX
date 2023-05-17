@@ -1,5 +1,8 @@
 package com.business.client;
 
+import com.business.client.controller.ChatController;
+import com.business.client.model.User;
+import com.business.client.view.ChatView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -27,6 +30,15 @@ public class Main /*extends Application*/ {
     */
 
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        ChatController chatController = new ChatController();
+        User user = new User("Juan", "David");
+
+        // Crear la instancia de ChatView y configurar el usuario
+        ChatView chatView = new ChatView(chatController, user);
+
+        // Configurar el ChatController como el controlador de la vista
+
+        // Lanzar la aplicación JavaFX
+        Application.launch(ChatView.class, args);
     }
 }
