@@ -5,9 +5,14 @@ import com.business.client.controller.ClientController;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ChatServer {
     private static final int PORT = 5000; // Puerto en el que escucha el servidor
+    private Set<String> connectedUsers = new HashSet<>();
 
     public static void main(String[] args) {
         try {
@@ -76,17 +81,31 @@ public class ChatServer {
         }
     }
     private void establishConnection(String username) {
+        System.out.println("01|" + username);
     }
 
     private void confirmConnection(String username) {
+        if (connectedUsers.contains(username)) {
+            System.out.println("02|" + username + "|No conectado");
+
+        } else {
+            connectedUsers.add(username);
+            System.out.println("02|" + username + "|Conectado");
+        }
     }
 
     private void sendUserList(String username) {
-        // Lógica para enviar la lista de usuarios conectados
+        // Construir la lista de usuarios conectados
+        List<String> userList = new ArrayList<>(connectedUsers);
+
+        // Convertir la lista en un mensaje de texto separado por |
+        String userListMessage = String.join("|", userList);
+
+        System.out.println("03|" + userListMessage);
     }
 
     private void requestUserList(String username) {
-        // Lógica para solicitar la lista de usuarios conectados
+        // Comunicación cliente-servidor
     }
 
     private void sendMessage(String username) {
