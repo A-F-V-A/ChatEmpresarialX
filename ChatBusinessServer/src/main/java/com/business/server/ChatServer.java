@@ -13,6 +13,7 @@ import java.util.Set;
 public class ChatServer {
     private static final int PORT = 5000; // Puerto en el que escucha el servidor
     private Set<String> connectedUsers = new HashSet<>();
+    private List<ClientController> connectedClients = new ArrayList<>();
 
     public static void main(String[] args) {
         try {
@@ -108,8 +109,10 @@ public class ChatServer {
         // Comunicación cliente-servidor
     }
 
-    private void sendMessage(String username) {
-        // Aquí implementa la lógica para enviar un mensaje
+    private void sendMessage(String message) {
+        for (ClientController client : connectedClients) {
+            client.sendMessage(message);
+        }
     }
 
     private void sendFile(String username) {

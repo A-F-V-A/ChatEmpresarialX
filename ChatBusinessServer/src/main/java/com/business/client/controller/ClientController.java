@@ -42,4 +42,9 @@ public class ClientController extends Thread {
             }
         }
     }
+
+    public void sendMessage(String message) {
+        out.println(message);
+    }
+
 }
