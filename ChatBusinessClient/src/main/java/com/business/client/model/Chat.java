@@ -4,30 +4,54 @@ package com.business.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Chat {
-    private List<Message> messages;
-    private List<File> files;
 
-    public Chat() {
-        messages = new ArrayList<>();
-        files = new ArrayList<>();
+    private int port;
+    private String serverAddress;
+    private String nickname;
+    private List<Message> messageList;
+    private List<File> fileList;
+    private List<String> userList;
+
+    public Chat(int port, String serverAddress, String nickname) {
+        this.port = port;
+        this.serverAddress = serverAddress;
+        this.nickname = nickname;
+        messageList = new ArrayList<>();
+        fileList = new ArrayList<>();
+        userList = new ArrayList<>();
     }
 
-    // Métodos para agregar y obtener mensajes
     public void addMessage(Message message) {
-        messages.add(message);
+        messageList.add(message);
     }
 
-    public List<Message> getMessages() {
-        return messages;
-    }
-
-    // Métodos para agregar y obtener archivos
     public void addFile(File file) {
-        files.add(file);
+        fileList.add(file);
     }
 
-    public List<File> getFiles() {
-        return files;
+    public void addUser(String nickname) {
+        userList.add(nickname);
+    }
+
+    public List<Message> getMessageList() {
+        return messageList;
+    }
+
+    public List<File> getFileList() {
+        return fileList;
+    }
+
+    public List<String> getUserList() {
+        return userList;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public String getServerAddress() {
+        return serverAddress;
     }
 }

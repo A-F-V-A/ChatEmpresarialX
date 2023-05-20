@@ -5,6 +5,15 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.business.client.controller.ChatController">
   <children>
-    <Button fx:id="B_conect" layoutX="209.0" layoutY="188.0" mnemonicParsing="false" onAction="#onHelloButtonCLick" prefHeight="24.0" prefWidth="182.0" text="Button" />
+    <Button
+            fx:id="B_conect"
+            layoutX="209.0"
+            layoutY="188.0"
+            mnemonicParsing="false"
+            onAction="#onHelloButtonCLick"
+            prefHeight="24.0"
+            prefWidth="182.0"
+            text="Button"
+            styleClass="btn,  btn-lg, btn-primary"/>
   </children>
 </AnchorPane>
