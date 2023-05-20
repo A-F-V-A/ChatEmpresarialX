@@ -11,7 +11,7 @@ public class Chat {
     private String serverAddress;
     private String nickname;
     private List<Message> messageList;
-    private List<File> fileList;
+    private List<ChatFile> chatFileList;
     private List<String> userList;
 
     public Chat(int port, String serverAddress, String nickname) {
@@ -19,7 +19,7 @@ public class Chat {
         this.serverAddress = serverAddress;
         this.nickname = nickname;
         messageList = new ArrayList<>();
-        fileList = new ArrayList<>();
+        chatFileList = new ArrayList<>();
         userList = new ArrayList<>();
     }
 
@@ -27,8 +27,8 @@ public class Chat {
         messageList.add(message);
     }
 
-    public void addFile(File file) {
-        fileList.add(file);
+    public void addFile(ChatFile chatFIle) {
+        chatFileList.add(chatFIle);
     }
 
     public void addUser(String nickname) {
@@ -39,8 +39,8 @@ public class Chat {
         return messageList;
     }
 
-    public List<File> getFileList() {
-        return fileList;
+    public List<ChatFile> getFileList() {
+        return chatFileList;
     }
 
     public List<String> getUserList() {
@@ -54,4 +54,17 @@ public class Chat {
     public String getServerAddress() {
         return serverAddress;
     }
+
+    public String connectSession(){
+        return CommunicationCode.ESTABLISH_CONNECTION.getCode() +'|'+ nickname;
+    }
+
+    public String requestUserLIst(){
+        return CommunicationCode.REQUEST_USER_LIST.getCode() +'|'+ nickname;
+    }
+
+    public String signOff(){
+        return CommunicationCode.CLOSE_SESSION.getCode() +'|'+ nickname;
+    }
+
 }

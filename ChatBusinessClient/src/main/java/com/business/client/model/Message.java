@@ -5,7 +5,7 @@ import java.util.Date;
 public class Message {
     private String nickname;
     private String content;
-    private Date date;
+    private final Date date;
 
     public Message(String nickname, String content, Date date) {
         this.nickname = nickname;
@@ -38,4 +38,11 @@ public class Message {
         return formatter.format(date);
     }
 
+    @Override
+    public String toString() {
+        return  CommunicationCode.SEND_MESSAGE.getCode() + '|' +
+                nickname + '|' +
+                content + '|' +
+                getDate();
+    }
 }
