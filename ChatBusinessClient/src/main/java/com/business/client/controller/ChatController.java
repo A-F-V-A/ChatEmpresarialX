@@ -6,7 +6,11 @@ import com.business.client.model.Message;
 import com.business.client.view.ChatView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -16,30 +20,57 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 
 public class ChatController {
+
+    /* Field to store the reference to the Stage */
+    private Stage primaryStage;
+
+    /* Business logic */
+    private Chat chat;
+
+    /* Logical interface */
     @FXML
     private ScrollPane scrollPane;
     @FXML
     private TextArea I_newMessage;
     @FXML
     private VBox messageContainer;
+    @FXML
+    private Button B_sendMessage;
+    @FXML
+    private Button B_sendFIle;
+    @FXML
+    private Button B_connect;
 
-    private Stage primaryStage; // Campo para almacenar la referencia al Stage
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+    }
+
+    public void initialize() {
+        B_sendFIle.setDisable(true);
+        B_sendFIle.setMouseTransparent(true);
+        B_sendFIle.setCursor(Cursor.WAIT);
+        I_newMessage.setDisable(true);
+        I_newMessage.setMouseTransparent(true);
+        I_newMessage.setCursor(Cursor.WAIT);
+        B_sendMessage.setDisable(true);
+        B_sendMessage.setMouseTransparent(true);
+        B_sendMessage.setCursor(Cursor.WAIT);
     }
     @FXML
     protected void sendMessage(ActionEvent e){
 
         String text = I_newMessage.getText();
         if(!text.isEmpty()){
-            Chat newChat = new Chat(80,"192.163.0.1", "afva");
-            Message newMessage = new Message(newChat.getNickname(),text);
+
+            Message newMessage = new Message(chat.getNickname(),text);
             System.out.println(newMessage.toString());
             messageContainer.getChildren().add(ChatView.Message(newMessage));
             I_newMessage.setText("");
@@ -50,10 +81,8 @@ public class ChatController {
         }
 
     }
-
     @FXML
     protected void sendFile(ActionEvent e) {
-        Chat newChat = new Chat(80, "192.163.0.1", "afva");
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(
@@ -63,21 +92,55 @@ public class ChatController {
             );
 
             /* Show the file selection dialog */
-            File selectedFile = fileChooser.showOpenDialog(primaryStage);
+        File selectedFile = fileChooser.showOpenDialog(primaryStage);
 
-            ChatFile newFile = new ChatFile(newChat.getNickname(), selectedFile);
+        ChatFile newFile = new ChatFile(chat.getNickname(), selectedFile);
 
-            messageContainer.getChildren().add(ChatView.MessageFile(newFile));
-            scrollPane.applyCss();
-            scrollPane.layout();
-            scrollPane.setVvalue(1.0);
+        messageContainer.getChildren().add(ChatView.MessageFile(newFile));
+        scrollPane.applyCss();
+        scrollPane.layout();
+        scrollPane.setVvalue(1.0);
 
-        } catch (Exception err) {
-            System.err.println(err);
+    } catch (Exception err) {
+        System.err.println(err);
+    }
+}
+    @FXML
+    protected void startConnection(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/business/client/modal-connection.fxml"));
+            Parent root = loader.load();
+            ModalConnectionController modal = loader.getController();
+
+            Scene sceneModal = new Scene(root);
+            Stage stageModal = new Stage();
+            stageModal.initModality(Modality.APPLICATION_MODAL);
+            stageModal.setScene(sceneModal);
+            stageModal.showAndWait();
+
+
+            Chat newChat = modal.getNewChat();
+            if(newChat != null){
+                chat = newChat;
+
+                B_sendFIle.setDisable(false);
+                B_sendFIle.setMouseTransparent(false);
+                B_sendFIle.setCursor(Cursor.HAND);
+                I_newMessage.setDisable(false);
+                I_newMessage.setMouseTransparent(false);
+                I_newMessage.setCursor(Cursor.HAND);
+                B_sendMessage.setDisable(false);
+                B_sendMessage.setMouseTransparent(false);
+                B_sendMessage.setCursor(Cursor.HAND);
+
+                B_connect.setDisable(true);
+
+                System.out.println(chat.connectSession());
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
     }
-
-
 }
 
 

@@ -48,9 +48,21 @@
                                           <Insets />
                                        </BorderPane.margin>
                                        <children>
-                                          <Button fx:id="B_sendFIle" accessibleRole="BUTTON" mnemonicParsing="false" onAction="#sendFile" prefHeight="24.0" prefWidth="0.0" style="-fx-background-color: transparent;">
+                                          <Button fx:id="B_connect" accessibleRole="BUTTON" mnemonicParsing="false" onAction="#startConnection" prefHeight="24.0" prefWidth="0.0" style="-fx-background-color: transparent;">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                             <graphic>
+                                                <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" smooth="false">
+                                                   <image>
+                                                      <Image url="@src/img/wifi.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                          <Button fx:id="B_sendFIle" accessibleRole="BUTTON" mnemonicParsing="false" onAction="#sendFile" prefHeight="24.0" prefWidth="0.0" style="-fx-background-color: transparent;">
+                                             <cursor>
+                                                <Cursor fx:constant="WAIT" />
                                              </cursor>
                                              <graphic>
                                                 <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" smooth="false">
