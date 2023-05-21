@@ -145,18 +145,38 @@ public class ClientController implements Runnable {
         return username;
     }
 
+    /**
+     * Establece el nombre de usuario del cliente.
+     *
+     * @param username nombre de usuario del cliente.
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Obtiene el socket del cliente.
+     *
+     * @return socket del cliente.
+     */
     public Socket getClientSocket() {
         return clientSocket;
     }
 
+    /**
+     * Obtiene el flujo de salida del cliente.
+     *
+     * @return flujo de salida del cliente.
+     */
     public OutputStream getOutputStream() {
         return outputStream;
     }
 
+    /**
+     * Establece el flujo de salida del cliente.
+     *
+     * @param outputStream flujo de salida del cliente.
+     */
     public void setOutputStream(OutputStream outputStream) {
         this.outputStream = outputStream;
     }
