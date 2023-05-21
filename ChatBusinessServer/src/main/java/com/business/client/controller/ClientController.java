@@ -1,21 +1,48 @@
 package com.business.client.controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
-public class ClientController extends Thread {
+/**
+ * Controlador del cliente que se encarga de manejar las conexiones y comunicación con el servidor.
+ */
+public class ClientController implements Runnable {
 
-    private final Socket clientSocket;
+    private Socket clientSocket;
+    // Esto permite enviar datos desde el cliente al servidor.
     private PrintWriter out;
+    // Esto permite leer los datos que llegan al cliente desde el servidor.
     private BufferedReader in;
+    private String username;
+    private OutputStream outputStream;
 
+    /**
+     * Crea un objeto ClientController con el socket de cliente especificado.
+     *
+     * @param socket socket del cliente.
+     */
     public ClientController(Socket socket) {
         this.clientSocket = socket;
     }
 
+    /**
+     * Crea un objeto ClientController sin especificar el socket del cliente.
+     */
+    public ClientController() {
+    }
+
+    /**
+     * Inicia la ejecución del hilo de control del cliente.
+     */
+    public void start() {
+        Thread thread = new Thread(this);
+        thread.start();
+    }
+
+    /**
+     * Método principal del hilo de control del cliente.
+     * Se encarga de establecer la comunicación con el servidor y procesar las solicitudes del cliente.
+     */
     @Override
     public void run() {
         try {
@@ -34,17 +61,103 @@ public class ClientController extends Thread {
             e.printStackTrace();
         } finally {
             try {
-                in.close();
-                out.close();
-                clientSocket.close();
+                if (in != null) {
+                    in.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+                if (clientSocket != null) {
+                    clientSocket.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void sendMessage(String message) {
-        out.println(message);
+    /**
+     * Envía un arreglo de bytes al servidor.
+     *
+     * @param bytes arreglo de bytes a enviar.
+     */
+    public void sendBytes(byte[] bytes) {
+        OutputStream outputStream = null;
+        try {
+            outputStream = clientSocket.getOutputStream();
+            outputStream.write(bytes);
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
+    /**
+     * Envía un subconjunto del arreglo de bytes al servidor.
+     *
+     * @param bytes  arreglo de bytes a enviar.
+     * @param length cantidad de bytes a enviar.
+     */
+    public void sendBytes(byte[] bytes, int length) {
+        OutputStream outputStream = null;
+        try {
+            outputStream = clientSocket.getOutputStream();
+            outputStream.write(bytes, 0, length);
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * Envía un mensaje al servidor.
+     *
+     * @param message mensaje a enviar.
+     */
+    public void sendMessage(String message) {
+        if (out != null) {
+            out.println(message);
+        }
+    }
+
+    /**
+     * Obtiene el nombre de usuario del cliente.
+     *
+     * @return nombre de usuario del cliente.
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Socket getClientSocket() {
+        return clientSocket;
+    }
+
+    public OutputStream getOutputStream() {
+        return outputStream;
+    }
+
+    public void setOutputStream(OutputStream outputStream) {
+        this.outputStream = outputStream;
+    }
 }
