@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.business.client.controller.ChatController">
+  <children>
+      <TabPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Open Chat">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0">
+                     <children>
+                        <BorderPane layoutX="200.0" layoutY="67.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <center>
+                               <ScrollPane fx:id="scrollPane" prefHeight="310.0" prefWidth="434.0" BorderPane.alignment="CENTER">
+                                   <content>
+                                         <VBox fx:id="messageContainer" prefHeight="272.0" prefWidth="433.0" />
+                                   </content>
+                                   <BorderPane.margin>
+                                       <Insets bottom="2.0" left="5.0" right="5.0" top="5.0" />
+                                   </BorderPane.margin>
+                               </ScrollPane>
+                           </center>
+                           <right>
+                              <VBox prefHeight="310.0" prefWidth="138.0" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </BorderPane.margin>
+                              </VBox>
+                           </right>
+                           <bottom>
+                              <BorderPane prefHeight="86.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                                 <top>
+                                    <HBox prefHeight="22.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                                       <BorderPane.margin>
+                                          <Insets />
+                                       </BorderPane.margin>
+                                       <children>
+                                          <Button fx:id="B_connect" accessibleRole="BUTTON" mnemonicParsing="false" onAction="#startConnection" prefHeight="24.0" prefWidth="0.0" style="-fx-background-color: transparent;">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                             <graphic>
+                                                <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" smooth="false">
+                                                   <image>
+                                                      <Image url="@src/img/wifi.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                          <Button fx:id="B_sendFIle" accessibleRole="BUTTON" mnemonicParsing="false" onAction="#sendFile" prefHeight="24.0" prefWidth="0.0" style="-fx-background-color: transparent;">
+                                             <cursor>
+                                                <Cursor fx:constant="WAIT" />
+                                             </cursor>
+                                             <graphic>
+                                                <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" smooth="false">
+                                                   <image>
+                                                      <Image url="@src/img/cadena.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                       <padding>
+                                          <Insets left="5.0" right="5.0" />
+                                       </padding>
+                                    </HBox>
+                                 </top>
+                                 <center>
+                                    <TextArea fx:id="I_newMessage" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                       <BorderPane.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </BorderPane.margin>
+                                    </TextArea>
+                                 </center>
+                                 <right>
+                                  <Button fx:id="B_sendMessage" mnemonicParsing="false" onAction="#sendMessage" prefHeight="55.0" prefWidth="55.0" styleClass="btn,  btn-lg, btn-success" BorderPane.alignment="CENTER">
+                                       <BorderPane.margin>
+                                          <Insets bottom="5.0" right="5.0" top="5.0" />
+                                       </BorderPane.margin>
+                                       <graphic>
+                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@src/img/enviar.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </right>
+                              </BorderPane>
+                           </bottom>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+  </children>
+</AnchorPane>

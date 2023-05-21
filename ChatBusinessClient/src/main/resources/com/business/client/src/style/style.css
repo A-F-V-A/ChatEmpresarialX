@@ -1,0 +1,92 @@
+/* Message */
+
+.message-component {
+    -fx-background-color: #d9ffd1;
+    -fx-padding: 3px;
+}
+
+.message-text-nickname{
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #999999; 
+    -fx-letter-spacing: 2px;
+}
+
+.message-text-date{
+    -fx-font-size: 9px;
+    -fx-font-style: italic;
+    -fx-text-fill: #a3a1a1;
+    -fx-alignment: baseline-right;
+}
+
+.message-text {
+    -fx-font-size: 9px;
+    -fx-letter-spacing: 2px;
+    -fx-wrap-text: true;
+    -fx-margin: 5px;
+}
+
+/* Style the modal of connection */
+
+
+.label-style {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #757575;
+}
+
+.textfield-style {
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #999999;
+    -fx-text-fill: #333333;
+    -fx-background-color: #F2F2F2;
+    -fx-background-radius: 4px;
+    -fx-border-color: #CCCCCC; /* Color de borde gris claro */
+    -fx-border-width: 1px; /* Ancho del borde */
+    -fx-border-radius: 4px; /* Esquinas redondeadas */
+    -fx-padding: 6px;
+    -fx-pref-height: 30px;
+}
+
+
+
+.textfield-style:focused {
+    -fx-background-color: #E2E2E2;
+}
+
+.textfield-style:hover {
+    -fx-background-color: #E2E2E2;
+}
+
+.button-connect {
+    -fx-font-size: 10px;
+    -fx-background-color: transparent;
+    -fx-border-color: #4CAF50;
+    -fx-border-width: 1.4px;
+    -fx-background-radius: 4px;
+    -fx-border-radius: 5px;
+    -fx-padding: 8px 16px;
+}
+
+.button-connect:hover {
+    -fx-text-fill: white;
+    -fx-background-color: #4CAF50;
+    -fx-border-color: #4CAF50;
+}
+
+.button-cancel {
+    -fx-font-size: 10px;
+    -fx-background-color: transparent;
+    -fx-border-color: #F44336;
+    -fx-border-width: 1.4px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 4px;
+    -fx-padding: 8px 16px;
+}
+
+.button-cancel:hover {
+    -fx-text-fill: white;
+    -fx-background-color: #F44336;
+    -fx-border-color: #F44336;
+}
+

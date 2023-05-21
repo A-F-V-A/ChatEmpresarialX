@@ -1,6 +1,7 @@
-module ChatBusiness {
+module com.business.client.chatbusinessclient {
     requires javafx.controls;
     requires javafx.fxml;
+    requires org.kordamp.bootstrapfx.core;
     requires java.desktop;
 
     opens com.business.client to javafx.fxml;
