@@ -1,6 +1,7 @@
 module ChatBusiness {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
     opens com.business.client to javafx.fxml;
     exports com.business.client;

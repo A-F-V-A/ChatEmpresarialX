@@ -1,4 +1,4 @@
 package com.business.client.view;
 
-public class ChatView {
+public class ChatView extends Application {
 }
