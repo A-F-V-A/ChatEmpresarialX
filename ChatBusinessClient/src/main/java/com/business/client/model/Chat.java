@@ -51,6 +51,10 @@ public class Chat {
         return port;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
     public String getServerAddress() {
         return serverAddress;
     }

@@ -1,0 +1,30 @@
+/* Message */
+
+.message-component {
+    -fx-background-color: #d9ffd1;
+    -fx-padding: 3px;
+}
+
+.message-text-nickname{
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #999999; 
+    -fx-letter-spacing: 2px;
+}
+
+.message-text-date{
+    -fx-font-size: 9px;
+    -fx-font-style: italic;
+    -fx-text-fill: #a3a1a1;
+    -fx-alignment: baseline-right;
+}
+
+.message-text {
+    -fx-font-size: 9px;
+    -fx-letter-spacing: 2px;
+    -fx-wrap-text: true;
+    -fx-margin: 5px;
+}
+
+
+

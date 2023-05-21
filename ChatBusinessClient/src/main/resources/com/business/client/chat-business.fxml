@@ -24,18 +24,14 @@
                      <children>
                         <BorderPane layoutX="200.0" layoutY="67.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <center>
-                              <ScrollPane prefHeight="310.0" prefWidth="434.0" BorderPane.alignment="CENTER">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="276.0" prefWidth="450.0">
-                                       <children>
-                                          <VBox layoutX="168.0" layoutY="38.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                </content>
-                                 <BorderPane.margin>
-                                    <Insets bottom="2.0" left="5.0" right="5.0" top="5.0" />
-                                 </BorderPane.margin>
-                              </ScrollPane>
+                               <ScrollPane fx:id="scrollPane" prefHeight="310.0" prefWidth="434.0" BorderPane.alignment="CENTER">
+                                   <content>
+                                         <VBox fx:id="messageContainer" prefHeight="272.0" prefWidth="433.0" />
+                                   </content>
+                                   <BorderPane.margin>
+                                       <Insets bottom="2.0" left="5.0" right="5.0" top="5.0" />
+                                   </BorderPane.margin>
+                               </ScrollPane>
                            </center>
                            <right>
                               <VBox prefHeight="310.0" prefWidth="138.0" BorderPane.alignment="CENTER">
@@ -52,7 +48,7 @@
                                           <Insets />
                                        </BorderPane.margin>
                                        <children>
-                                          <Button accessibleRole="BUTTON" mnemonicParsing="false" prefHeight="24.0" prefWidth="0.0" style="-fx-background-color: transparent;">
+                                          <Button fx:id="B_sendFIle" accessibleRole="BUTTON" mnemonicParsing="false" onAction="#sendFile" prefHeight="24.0" prefWidth="0.0" style="-fx-background-color: transparent;">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
@@ -71,14 +67,14 @@
                                     </HBox>
                                  </top>
                                  <center>
-                                    <TextArea prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                    <TextArea fx:id="I_newMessage" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                        <BorderPane.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </BorderPane.margin>
                                     </TextArea>
                                  </center>
                                  <right>
-                                  <Button fx:id="B_sendMessage" mnemonicParsing="false" onAction="#onHelloButtonCLick" prefHeight="55.0" prefWidth="55.0" styleClass="btn,  btn-lg, btn-success" BorderPane.alignment="CENTER">
+                                  <Button fx:id="B_sendMessage" mnemonicParsing="false" onAction="#sendMessage" prefHeight="55.0" prefWidth="55.0" styleClass="btn,  btn-lg, btn-success" BorderPane.alignment="CENTER">
                                        <BorderPane.margin>
                                           <Insets bottom="5.0" right="5.0" top="5.0" />
                                        </BorderPane.margin>

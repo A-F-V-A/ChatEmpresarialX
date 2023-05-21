@@ -1,22 +1,21 @@
 package com.business.client.model;
 
+
+import static com.business.client.util.ValidateFile.getFileExtension;
+
 public enum FileType {
-    PDF("pdf", 600),
-    JPG("jpg", 600);
+    PDF("pdf"),
+    JPG("jpg"),
+    JPEG("jpeg");
 
     private String extension;
-    private int maxSizeKB;
 
-    FileType(String extension, int maxSizeKB) {
+    FileType(String extension) {
         this.extension = extension;
-        this.maxSizeKB = maxSizeKB;
     }
 
     public String getExtension() {
         return extension;
     }
 
-    public int getMaxSizeKB() {
-        return maxSizeKB;
-    }
 }
