@@ -14,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -77,15 +79,33 @@ public class ChatController {
 
     @FXML
     protected void sendMessage(ActionEvent e){
-        String text = I_newMessage.getText();
+        String text = I_newMessage.getText().replaceAll("\\n", "");
         if(!text.isEmpty()){
             Message newMessage = new Message(chat.getNickname(),text);
-            DrawMessage(newMessage);
+            messageContainer.getChildren().add(ChatView.Message(newMessage));
+            System.out.println(newMessage.toString());
             I_newMessage.setText("");
             chat.getConnection().sendMessage(newMessage.toString());
         }
 
     }
+
+    @FXML
+    protected void sendMessageEnter(KeyEvent e){
+        if (e.getCode() == KeyCode.ENTER) {
+            String text = I_newMessage.getText().replaceAll("\\n", "");
+            if(!text.isEmpty()){
+                Message newMessage = new Message(chat.getNickname(),text);
+                messageContainer.getChildren().add(ChatView.Message(newMessage));
+                System.out.println(newMessage.toString());
+                I_newMessage.setText("");
+                chat.getConnection().sendMessage(newMessage.toString());
+            }
+        }
+
+    }
+
+
     @FXML
     protected void sendFile(ActionEvent e) {
         try {
