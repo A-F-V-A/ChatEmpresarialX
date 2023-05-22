@@ -52,6 +52,7 @@ public class ChatConnection {
         writer.println(message);
         System.out.println(message);
         close();
+        stopListening();
     }
 
     /* metodos de connecion */

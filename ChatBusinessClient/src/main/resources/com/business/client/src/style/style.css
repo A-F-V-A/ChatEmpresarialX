@@ -107,17 +107,14 @@
 
 /* Estilo para el círculo que se ilumina en verde cuando está conectado */
 .connected-circle {
-    -fx-background-color: #ffffff; /* Color de fondo del círculo */
+    -fx-background-color: transparent; /* Fondo transparente */
     -fx-border-color: #cccccc; /* Color del borde del círculo */
     -fx-border-width: 2px; /* Ancho del borde del círculo */
     -fx-border-radius: 50%; /* Radio del borde para formar un círculo */
-    -fx-min-width: 20px; /* Ancho mínimo del círculo */
-    -fx-min-height: 20px; /* Altura mínima del círculo */
-    -fx-max-width: 20px; /* Ancho máximo del círculo */
-    -fx-max-height: 20px; /* Altura máxima del círculo */
-}
+    -fx-min-width: 10px; /* Ancho mínimo del círculo */
+    -fx-min-height: 10px; /* Altura mínima del círculo */
+    -fx-max-width: 10px; /* Ancho máximo del círculo */
+    -fx-max-height: 10px; /* Altura máxima del círculo */
+    -fx-effect: dropshadow(gaussian, #00ff00, 3, 0, 0, 0);
 
-/* Estilo para la sombra que se activa cuando el círculo está conectado */
-.connected-shadow {
-    -fx-effect: dropshadow(gaussian, #00ff00, 10, 0, 0, 0); /* Efecto de sombra verde */
 }

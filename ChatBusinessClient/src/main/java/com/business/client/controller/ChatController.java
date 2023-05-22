@@ -53,6 +53,9 @@ public class ChatController {
     @FXML
     private Button B_connect;
 
+    @FXML
+    private Button B_close;
+
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -68,6 +71,7 @@ public class ChatController {
         B_sendMessage.setDisable(true);
         B_sendMessage.setMouseTransparent(true);
         B_sendMessage.setCursor(Cursor.WAIT);
+        B_close.setDisable(true);
     }
 
 
@@ -129,7 +133,8 @@ public class ChatController {
             if(newChat != null){
                 chat = newChat;
                 if(chat.getConnection().connect(newChat.connectSession())){
-                    setVisual();
+                    setVisual(false);
+                    B_connect.setDisable(true);
                     chat.getConnection().setDrawMessage(this);
                     chat.getConnection().Hear();
                 }else{
@@ -143,22 +148,28 @@ public class ChatController {
     }
     @FXML
     protected void  closeConnection(ActionEvent e){
-
+        System.out.println("Connection Finality");
+        chat.getConnection().disconnect(chat.signOff());
+        B_connect.setDisable(false);
+        setVisual(true);
+        messageContainer.getChildren().clear();
+        vbox.getChildren().clear();
     }
 
 
-    private void setVisual(){
+    private void setVisual(boolean status){
 
-        B_sendFIle.setDisable(false);
-        B_sendFIle.setMouseTransparent(false);
-        B_sendFIle.setCursor(Cursor.HAND);
-        I_newMessage.setDisable(false);
-        I_newMessage.setMouseTransparent(false);
-        I_newMessage.setCursor(Cursor.HAND);
-        B_sendMessage.setDisable(false);
-        B_sendMessage.setMouseTransparent(false);
-        B_sendMessage.setCursor(Cursor.HAND);
-        B_connect.setDisable(true);
+        B_sendFIle.setDisable(status);
+        B_sendFIle.setMouseTransparent(status);
+
+        I_newMessage.setDisable(status);
+        I_newMessage.setMouseTransparent(status);
+
+        B_sendMessage.setDisable(status);
+        B_sendMessage.setMouseTransparent(status);
+
+        B_close.setDisable(status);
+
     }
 
     public void setChat(Chat chat) {
