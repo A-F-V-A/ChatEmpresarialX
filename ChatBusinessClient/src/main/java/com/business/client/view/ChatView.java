@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -117,4 +118,21 @@ public class ChatView {
         }
     }
 
+    public  static  HBox UserConnect(String nickName){
+
+        HBox hbox = new HBox(); // Crear el HBox contenedor
+
+        Label nameLabel = new Label(nickName);
+        nameLabel.getStyleClass().add("username-label"); // Agregar la clase de estilo CSS al Label
+
+        Pane circlePane = new Pane();
+        circlePane.getStyleClass().add("connected-circle"); // Agregar la clase de estilo CSS al círculo
+        circlePane.setOnMouseEntered(e -> circlePane.getStyleClass().add("connected-shadow")); // Agregar la sombra al pasar el mouse
+        circlePane.setOnMouseExited(e -> circlePane.getStyleClass().remove("connected-shadow")); // Eliminar la sombra al salir el mouse
+
+        hbox.getChildren().addAll(nameLabel, circlePane); // Agregar el Label y el círculo al HBox
+
+
+        return hbox;
+    }
 }

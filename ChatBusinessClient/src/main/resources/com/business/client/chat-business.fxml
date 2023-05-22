@@ -34,7 +34,7 @@
                                </ScrollPane>
                            </center>
                            <right>
-                              <VBox prefHeight="310.0" prefWidth="138.0" BorderPane.alignment="CENTER">
+                              <VBox fx:id="vbox" prefHeight="310.0" prefWidth="138.0" BorderPane.alignment="CENTER">
                                  <BorderPane.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </BorderPane.margin>
@@ -48,6 +48,18 @@
                                           <Insets />
                                        </BorderPane.margin>
                                        <children>
+                                          <Button fx:id="B_close" accessibleRole="BUTTON" mnemonicParsing="false" onAction="#closeConnection" prefHeight="24.0" prefWidth="0.0" style="-fx-background-color: transparent;">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                             <graphic>
+                                                <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" smooth="false">
+                                                   <image>
+                                                      <Image url="@src/img/cerrar.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
                                           <Button fx:id="B_connect" accessibleRole="BUTTON" mnemonicParsing="false" onAction="#startConnection" prefHeight="24.0" prefWidth="0.0" style="-fx-background-color: transparent;">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
