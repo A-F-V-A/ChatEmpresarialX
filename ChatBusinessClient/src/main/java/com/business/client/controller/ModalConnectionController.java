@@ -1,20 +1,13 @@
 package com.business.client.controller;
 
 import com.business.client.model.Chat;
-import com.business.client.model.Message;
-import com.business.client.view.ChatView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
 
-import static com.business.client.util.ChatConnection.sendData;
 
 public class ModalConnectionController {
 
@@ -39,7 +32,6 @@ public class ModalConnectionController {
 
         try {
             newChat = new Chat(port,serverAddress, nickname);
-            sendData(newChat.connectSession(),newChat);
             Stage stage = (Stage) this.B_connect.getScene().getWindow();
             stage.close();
         }catch (IOException err){

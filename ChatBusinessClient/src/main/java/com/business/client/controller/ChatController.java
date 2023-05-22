@@ -26,7 +26,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 
-import static com.business.client.util.ChatConnection.sendData;
 
 public class ChatController {
 
@@ -80,11 +79,6 @@ public class ChatController {
             scrollPane.layout();
             scrollPane.setVvalue(1.0);
 
-            try {
-                sendData(newMessage.toString(),chat);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
         }
 
     }
@@ -109,7 +103,7 @@ public class ChatController {
         scrollPane.setVvalue(1.0);
 
 
-        sendData(newFile.toString(),chat);
+
 
 
     } catch (Exception err) {
@@ -133,25 +127,31 @@ public class ChatController {
             Chat newChat = modal.getNewChat();
             if(newChat != null){
                 chat = newChat;
-
-                Thread HiloChat = new Thread(chat);
-                HiloChat.start();
-
-                B_sendFIle.setDisable(false);
-                B_sendFIle.setMouseTransparent(false);
-                B_sendFIle.setCursor(Cursor.HAND);
-                I_newMessage.setDisable(false);
-                I_newMessage.setMouseTransparent(false);
-                I_newMessage.setCursor(Cursor.HAND);
-                B_sendMessage.setDisable(false);
-                B_sendMessage.setMouseTransparent(false);
-                B_sendMessage.setCursor(Cursor.HAND);
-                B_connect.setDisable(true);
+                if(newChat.getConnection().connect(newChat.connectSession())){
+                    setVisual();
+                }else{
+                    System.err.println("Error de connection");
+                }
 
             }
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+
+    private void setVisual(){
+
+        B_sendFIle.setDisable(false);
+        B_sendFIle.setMouseTransparent(false);
+        B_sendFIle.setCursor(Cursor.HAND);
+        I_newMessage.setDisable(false);
+        I_newMessage.setMouseTransparent(false);
+        I_newMessage.setCursor(Cursor.HAND);
+        B_sendMessage.setDisable(false);
+        B_sendMessage.setMouseTransparent(false);
+        B_sendMessage.setCursor(Cursor.HAND);
+        B_connect.setDisable(true);
     }
 }
 
