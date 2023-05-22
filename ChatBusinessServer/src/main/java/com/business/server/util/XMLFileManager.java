@@ -20,9 +20,9 @@ public class XMLFileManager {
      * Agrega una conexión al archivo XML.
      *
      * @param username  El nombre de usuario de la conexión.
-     * @param timestamp El timestamp de la conexión.
+//     * @param timestamp El timestamp de la conexión.
      */
-    public void agregarConexion(String username, String timestamp) {
+    public void agregarConexion(String username) {
         try {
             Document document = cargarDocumentoXML();
 
@@ -30,7 +30,7 @@ public class XMLFileManager {
 
             Element connectionElement = new Element("connection");
             connectionElement.addContent(new Element("username").setText(username));
-            connectionElement.addContent(new Element("timestamp").setText(timestamp));
+//            connectionElement.addContent(new Element("timestamp").setText(timestamp));
 
             connectionsElement.addContent(connectionElement);
 
@@ -102,9 +102,9 @@ public class XMLFileManager {
      * Agrega un usuario conectado al archivo XML.
      *
      * @param username El nombre de usuario del usuario conectado.
-     * @param log      El estado de conexión del usuario.
+//     * @param log      El estado de conexión del usuario.
      */
-    public void agregarUsuarioConectado(String username, String log) {
+    public void agregarUsuarioConectado(String username) {
         try {
             Document document = cargarDocumentoXML();
 
@@ -112,7 +112,7 @@ public class XMLFileManager {
 
             Element loggedInUserElement = new Element("loggedinuser");
             loggedInUserElement.addContent(new Element("username").setText(username));
-            loggedInUserElement.addContent(new Element("log").setText(log));
+//            loggedInUserElement.addContent(new Element("log").setText(log));
 
             loggedInUsersElement.addContent(loggedInUserElement);
 
