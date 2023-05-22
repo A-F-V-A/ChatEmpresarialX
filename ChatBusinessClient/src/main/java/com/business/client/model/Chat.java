@@ -19,6 +19,8 @@ public class Chat {
     private List<ChatFile> chatFileList;
     private List<String> userList;
 
+    public Chat(){}
+
     public Chat(int port, String serverAddress, String nickname) throws IOException {
         this.port = port;
         this.serverAddress = serverAddress;

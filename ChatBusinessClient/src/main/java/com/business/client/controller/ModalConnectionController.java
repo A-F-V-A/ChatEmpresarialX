@@ -49,4 +49,5 @@ public class ModalConnectionController {
     public Chat getNewChat() {
         return newChat;
     }
+
 }

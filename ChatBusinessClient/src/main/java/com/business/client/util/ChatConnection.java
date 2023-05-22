@@ -10,6 +10,7 @@ public class ChatConnection {
     private Socket connection;
     private BufferedReader reader;
     private PrintWriter writer;
+    private Thread listenMessage;
 
 
     public ChatConnection(String serverAddress, int port) throws IOException {
@@ -36,6 +37,32 @@ public class ChatConnection {
         return false;
     }
 
+    public void disconnect(String message) {
+        writer.println(message);
+        System.out.println(message);
+        close();
+    }
+
+    public void Hear() {
+        listenMessage = new Thread(() -> {
+            try {
+                while (!Thread.currentThread().isInterrupted()) {
+                    String receivedMessage = receiveMessage();
+                    // Aquí puedes procesar la información recibida del servidor como desees
+                    System.out.println("Mensaje recibido: " + receivedMessage);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        listenMessage.start();
+    }
+
+    public void stopListening() {
+        if (listenMessage != null) {
+            listenMessage.interrupt();
+        }
+    }
 
 
     /* metodos de connecion */

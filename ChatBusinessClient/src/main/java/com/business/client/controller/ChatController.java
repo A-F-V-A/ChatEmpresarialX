@@ -7,17 +7,12 @@ import com.business.client.view.ChatView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -65,6 +60,8 @@ public class ChatController {
         B_sendMessage.setMouseTransparent(true);
         B_sendMessage.setCursor(Cursor.WAIT);
     }
+
+
     @FXML
     protected void sendMessage(ActionEvent e){
 
@@ -78,6 +75,8 @@ public class ChatController {
             scrollPane.applyCss();
             scrollPane.layout();
             scrollPane.setVvalue(1.0);
+
+            chat.getConnection().sendMessage(newMessage.toString());
 
         }
 
@@ -124,11 +123,13 @@ public class ChatController {
             stageModal.showAndWait();
 
 
+
             Chat newChat = modal.getNewChat();
             if(newChat != null){
                 chat = newChat;
-                if(newChat.getConnection().connect(newChat.connectSession())){
+                if(chat.getConnection().connect(newChat.connectSession())){
                     setVisual();
+                    chat.getConnection().Hear();
                 }else{
                     System.err.println("Error de connection");
                 }
@@ -152,6 +153,10 @@ public class ChatController {
         B_sendMessage.setMouseTransparent(false);
         B_sendMessage.setCursor(Cursor.HAND);
         B_connect.setDisable(true);
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
     }
 }
 

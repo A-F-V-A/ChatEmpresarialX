@@ -50,9 +50,13 @@ public class ChatServer {
         }
     }
 
-    private void broadcastMessage(String message) {
+    private void broadcastMessage(String message,ClientHandler sender) {
+        int code = Integer.parseInt(message.split("\\|")[0]);
         for (ClientHandler client : clients) {
-            client.sendMessage(message);
+            if(client != sender)
+                client.sendMessage(message);
+            else if(code == 3)
+                client.sendMessage(message);
         }
     }
 
@@ -70,12 +74,16 @@ public class ChatServer {
             case 1:
                 // Establish connection
                 String nickname = parts[1];
+
                 System.out.println(nickname);
                 if (userManager.addUser(nickname)) {
+                    sender.setNickname(nickname);
                     sender.sendMessage("2|conectado");
-                    broadcastMessage(userManager.getUserListMessage());
+                    broadcastMessage(userManager.getUserListMessage(),sender);
                 } else {
                     sender.sendMessage("2|no conectado");
+                    sender.stopClient();
+                    sender.interrupt();
                 }
                 break;
 
@@ -89,7 +97,7 @@ public class ChatServer {
                 String chatMessage = parts[2];
                 String timestamp = parts[3];
                 String formattedMessage = "5|" + sender.getNickname() + "|" + chatMessage + "|" + timestamp;
-                broadcastMessage(formattedMessage);
+                broadcastMessage(formattedMessage,sender);
                 messageManager.addMessage(sender.getNickname(),chatMessage,timestamp);
                 break;
 
@@ -99,7 +107,7 @@ public class ChatServer {
                 String fileType = parts[3];
                 String fileContent = parts[4];
                 String fileMessage = "6|" + sender.getNickname() + "|" + parts[2] + "|" + fileType + "|" + fileContent;
-                broadcastMessage(fileMessage);
+                broadcastMessage(fileMessage,sender);
                 messageFileManager.addMessage(sender.getNickname(),fileContent,parts[2],FileType.valueOf(fileType));
                 break;
 
@@ -107,8 +115,9 @@ public class ChatServer {
                 // Close session
                 userManager.removeUser(sender.getNickname());
                 sender.sendMessage("7|" + sender.getNickname());
-                broadcastMessage(userManager.getUserListMessage());
+                broadcastMessage(userManager.getUserListMessage(),sender);
                 sender.stopClient();
+                sender.interrupt();
                 clients.remove(sender);
                 break;
 
@@ -154,6 +163,10 @@ public class ChatServer {
 
         public String getNickname() {
             return nickname;
+        }
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
         }
 
         public void stopClient() {
