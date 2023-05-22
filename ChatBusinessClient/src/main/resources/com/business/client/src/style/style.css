@@ -90,3 +90,31 @@
     -fx-border-color: #F44336;
 }
 
+
+/* Estilo para la lista de usuarios */
+
+#vbox {
+    -fx-background-color: #f2f2f2; /* Color de fondo del VBox */
+    -fx-padding: 10px; /* Espaciado interno del VBox */
+}
+
+/* Estilo para los Label de nombres de usuario */
+.username-label {
+    -fx-font-size: 10px; /* Tamaño de la fuente */
+    -fx-font-weight: bold; /* Negrita */
+    -fx-text-fill: #333333; /* Color del texto */
+}
+
+/* Estilo para el círculo que se ilumina en verde cuando está conectado */
+.connected-circle {
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-border-color: #cccccc; /* Color del borde del círculo */
+    -fx-border-width: 2px; /* Ancho del borde del círculo */
+    -fx-border-radius: 50%; /* Radio del borde para formar un círculo */
+    -fx-min-width: 10px; /* Ancho mínimo del círculo */
+    -fx-min-height: 10px; /* Altura mínima del círculo */
+    -fx-max-width: 10px; /* Ancho máximo del círculo */
+    -fx-max-height: 10px; /* Altura máxima del círculo */
+    -fx-effect: dropshadow(gaussian, #00ff00, 3, 0, 0, 0);
+
+}

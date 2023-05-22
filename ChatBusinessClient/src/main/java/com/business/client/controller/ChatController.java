@@ -4,6 +4,7 @@ import com.business.client.model.Chat;
 import com.business.client.model.ChatFile;
 import com.business.client.model.Message;
 import com.business.client.view.ChatView;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -20,6 +23,10 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.business.client.view.ChatView.UserConnect;
 
 
 public class ChatController {
@@ -32,6 +39,8 @@ public class ChatController {
 
     /* Logical interface */
     @FXML
+    private VBox vbox;
+    @FXML
     private ScrollPane scrollPane;
     @FXML
     private TextArea I_newMessage;
@@ -43,6 +52,9 @@ public class ChatController {
     private Button B_sendFIle;
     @FXML
     private Button B_connect;
+
+    @FXML
+    private Button B_close;
 
 
     public void setPrimaryStage(Stage primaryStage) {
@@ -59,25 +71,18 @@ public class ChatController {
         B_sendMessage.setDisable(true);
         B_sendMessage.setMouseTransparent(true);
         B_sendMessage.setCursor(Cursor.WAIT);
+        B_close.setDisable(true);
     }
 
 
     @FXML
     protected void sendMessage(ActionEvent e){
-
         String text = I_newMessage.getText();
         if(!text.isEmpty()){
-
             Message newMessage = new Message(chat.getNickname(),text);
-            messageContainer.getChildren().add(ChatView.Message(newMessage));
+            DrawMessage(newMessage);
             I_newMessage.setText("");
-            // Scroll to bottom
-            scrollPane.applyCss();
-            scrollPane.layout();
-            scrollPane.setVvalue(1.0);
-
             chat.getConnection().sendMessage(newMessage.toString());
-
         }
 
     }
@@ -128,7 +133,9 @@ public class ChatController {
             if(newChat != null){
                 chat = newChat;
                 if(chat.getConnection().connect(newChat.connectSession())){
-                    setVisual();
+                    setVisual(false);
+                    B_connect.setDisable(true);
+                    chat.getConnection().setDrawMessage(this);
                     chat.getConnection().Hear();
                 }else{
                     System.err.println("Error de connection");
@@ -139,24 +146,55 @@ public class ChatController {
             throw new RuntimeException(ex);
         }
     }
+    @FXML
+    protected void  closeConnection(ActionEvent e){
+        System.out.println("Connection Finality");
+        chat.getConnection().disconnect(chat.signOff());
+        B_connect.setDisable(false);
+        setVisual(true);
+        messageContainer.getChildren().clear();
+        vbox.getChildren().clear();
+    }
 
 
-    private void setVisual(){
+    private void setVisual(boolean status){
 
-        B_sendFIle.setDisable(false);
-        B_sendFIle.setMouseTransparent(false);
-        B_sendFIle.setCursor(Cursor.HAND);
-        I_newMessage.setDisable(false);
-        I_newMessage.setMouseTransparent(false);
-        I_newMessage.setCursor(Cursor.HAND);
-        B_sendMessage.setDisable(false);
-        B_sendMessage.setMouseTransparent(false);
-        B_sendMessage.setCursor(Cursor.HAND);
-        B_connect.setDisable(true);
+        B_sendFIle.setDisable(status);
+        B_sendFIle.setMouseTransparent(status);
+
+        I_newMessage.setDisable(status);
+        I_newMessage.setMouseTransparent(status);
+
+        B_sendMessage.setDisable(status);
+        B_sendMessage.setMouseTransparent(status);
+
+        B_close.setDisable(status);
+
     }
 
     public void setChat(Chat chat) {
         this.chat = chat;
+    }
+
+    public void  DrawMessage(Message message){
+        Platform.runLater(() -> {
+            messageContainer.getChildren().add(ChatView.Message(message));
+            // Scroll to bottom
+            scrollPane.applyCss();
+            scrollPane.layout();
+            scrollPane.setVvalue(1.0);
+        });
+    }
+
+    public void  loggedInUser(List<String> user){
+        Platform.runLater(() -> {
+            vbox.getChildren().clear();
+            for (String data:user) {
+                HBox hbox = UserConnect(data);
+                HBox.setHgrow(hbox, Priority.ALWAYS); // Hacer que el HBox ocupe todo el ancho disponible
+                vbox.getChildren().add(hbox);
+            }
+        });
     }
 }
 

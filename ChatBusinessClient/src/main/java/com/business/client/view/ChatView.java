@@ -3,11 +3,13 @@ package com.business.client.view;
 import com.business.client.model.ChatFile;
 import com.business.client.model.Message;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -117,4 +119,32 @@ public class ChatView {
         }
     }
 
+    public  static  HBox UserConnect(String nickName){
+
+        HBox hbox = new HBox(); // Crear el HBox contenedor
+        hbox.setAlignment(Pos.CENTER_LEFT); // Alinear los elementos al centro izquierdo
+
+        Label nameLabel = new Label(nickName);
+        nameLabel.getStyleClass().add("username-label"); // Agregar la clase de estilo CSS al Label
+
+        Pane circlePane = new Pane();
+        circlePane.getStyleClass().add("connected-circle"); // Agregar la clase de estilo CSS al círculo
+        circlePane.setPrefWidth(5);
+        circlePane.setPrefHeight(5);
+
+
+
+        // Establecer el margen alrededor del círculo
+        Insets circleMargin = new Insets(0, 5, 0, 0);
+
+        // Establecer el margen inferior en el HBox
+        Insets hboxMargin = new Insets(0, 0, 5, 0);
+        HBox.setMargin(hbox, hboxMargin);
+
+        HBox.setMargin(circlePane, circleMargin);
+
+        hbox.getChildren().addAll(circlePane, nameLabel); // Agregar el Label y el círculo al HBox
+
+        return hbox;
+    }
 }
