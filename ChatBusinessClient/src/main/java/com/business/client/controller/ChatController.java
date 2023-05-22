@@ -122,6 +122,8 @@ public class ChatController {
         ChatFile newFile = new ChatFile(chat.getNickname(), selectedFile);
 
         messageContainer.getChildren().add(ChatView.MessageFile(newFile));
+
+        chat.getConnection().sendMessage(newFile.toString());
         scrollPane.applyCss();
         scrollPane.layout();
         scrollPane.setVvalue(1.0);
@@ -205,6 +207,22 @@ public class ChatController {
             scrollPane.setVvalue(1.0);
         });
     }
+
+    public void  DrawMessageFile(ChatFile message){
+        Platform.runLater(() -> {
+            try {
+                messageContainer.getChildren().add(ChatView.MessageFile(message));
+                // Scroll to bottom
+                scrollPane.applyCss();
+                scrollPane.layout();
+                scrollPane.setVvalue(1.0);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+
 
     public void  loggedInUser(List<String> user){
         Platform.runLater(() -> {

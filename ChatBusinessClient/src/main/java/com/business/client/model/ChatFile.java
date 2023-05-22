@@ -13,6 +13,18 @@ public class ChatFile {
     private FileType fileType;
     private String readFileContents;
 
+    public ChatFile(String nickname, Date date,String readFileContents,String fileType){
+        this.nickname = nickname;
+        this.date = date;
+        this.readFileContents = readFileContents;
+        try {
+            this.fileType = getFileTypeFromFileName("name." + fileType);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     public ChatFile(String nickname, Date date, File file) throws Exception {
         this.nickname = nickname;
         this.date = date;

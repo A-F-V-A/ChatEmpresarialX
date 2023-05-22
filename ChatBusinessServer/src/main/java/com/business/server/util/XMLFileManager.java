@@ -20,7 +20,6 @@ public class XMLFileManager {
      * Agrega una conexión al archivo XML.
      *
      * @param username  El nombre de usuario de la conexión.
-//     * @param timestamp El timestamp de la conexión.
      */
     public void agregarConexion(String username) {
         try {

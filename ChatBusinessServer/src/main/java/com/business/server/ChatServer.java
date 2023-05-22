@@ -71,7 +71,7 @@ public class ChatServer {
         // Parse the message and perform the necessary actions
         String[] parts = message.split("\\|");
         int code = Integer.parseInt(parts[0]);
-        XMLFileManager xmlFileManager = new XMLFileManager("ChatBusinessServer/src/main/java/com/business/server/ChatEmpresarialX.xml");
+        XMLFileManager xmlFileManager = new XMLFileManager("/home/afva/Documentos/projects_java/ChatEmpresarialX/ChatBusinessServer/src/main/java/com/business/server/ChatEmpresarialX.xml");
 
         switch (code) {
             case 1:
@@ -108,12 +108,18 @@ public class ChatServer {
 
             case 6:
                 // File message
+                FileType type;
 
                 String fileType = parts[3];
                 String fileContent = parts[4];
                 String fileMessage = "6|" + sender.getNickname() + "|" + parts[2] + "|" + fileType + "|" + fileContent;
                 broadcastMessage(fileMessage,sender);
-                messageFileManager.addMessage(sender.getNickname(),fileContent,parts[2],FileType.valueOf(fileType));
+
+                if(fileType.equals("jpg")) type = FileType.JPG;
+                else if (fileType.equals("jpeg"))  type = FileType.JPEG;
+                else type = FileType.PDF;
+
+                messageFileManager.addMessage(sender.getNickname(),fileContent,parts[2],type);
                 xmlFileManager.agregarArchivo(sender.getNickname(), fileContent, fileMessage);
                 break;
 
@@ -122,10 +128,11 @@ public class ChatServer {
                 userManager.removeUser(sender.getNickname());
                 sender.sendMessage("7|" + sender.getNickname());
                 broadcastMessage(userManager.getUserListMessage(),sender);
-                sender.stopClient();
-                sender.interrupt();
-                clients.remove(sender);
                 xmlFileManager.agregarUsuarioConectado(sender.getNickname());
+                sender.interrupt();
+                sender.stopClient();
+                clients.remove(sender);
+
                 break;
 
             default:
@@ -160,7 +167,20 @@ public class ChatServer {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                stopClient();
+                // Lógica para cerrar el cliente y los recursos relacionados
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                    if (writer != null) {
+                        writer.close();
+                    }
+                    if (socket != null) {
+                        socket.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 

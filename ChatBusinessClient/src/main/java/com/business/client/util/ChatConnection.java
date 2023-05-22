@@ -2,6 +2,7 @@ package com.business.client.util;
 
 import com.business.client.controller.ChatController;
 import com.business.client.model.Chat;
+import com.business.client.model.ChatFile;
 import com.business.client.model.CommunicationCode;
 import com.business.client.model.Message;
 
@@ -118,13 +119,18 @@ public class ChatConnection {
 
             case 6:
                 // File message
-                /*
+                String nickName01 = parts[1];
+                String timestamp01 = parts[2];
                 String fileType = parts[3];
                 String fileContent = parts[4];
-                String fileMessage = "6|" + sender.getNickname() + "|" + parts[2] + "|" + fileType + "|" + fileContent;
-                broadcastMessage(fileMessage,sender);
-                messageFileManager.addMessage(sender.getNickname(),fileContent,parts[2],FileType.valueOf(fileType));
-                 */
+
+                Date date01 = new Date(timestamp01);
+                ChatFile newChatFile = new ChatFile(nickName01,date01,fileContent,fileType);
+
+                drawMessage.DrawMessageFile(newChatFile);
+
+
+
                 break;
 
             default:
