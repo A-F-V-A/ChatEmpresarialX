@@ -4,6 +4,7 @@ import com.business.server.managers.MessageFileManager;
 import com.business.server.managers.MessageManager;
 import com.business.server.managers.UserManager;
 import com.business.server.model.FileType;
+import com.business.server.util.XMLFileManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ChatServer {
@@ -69,6 +71,7 @@ public class ChatServer {
         // Parse the message and perform the necessary actions
         String[] parts = message.split("\\|");
         int code = Integer.parseInt(parts[0]);
+        XMLFileManager xmlFileManager = new XMLFileManager("ChatBusinessServer/src/main/java/com/business/server/ChatEmpresarialX.xml");
 
         switch (code) {
             case 1:
@@ -80,6 +83,7 @@ public class ChatServer {
                     sender.setNickname(nickname);
                     sender.sendMessage("2|conectado");
                     broadcastMessage(userManager.getUserListMessage(),sender);
+                    xmlFileManager.agregarConexion(nickname);
                 } else {
                     sender.sendMessage("2|no conectado");
                     sender.stopClient();
@@ -99,6 +103,7 @@ public class ChatServer {
                 String formattedMessage = "5|" + sender.getNickname() + "|" + chatMessage + "|" + timestamp;
                 broadcastMessage(formattedMessage,sender);
                 messageManager.addMessage(sender.getNickname(),chatMessage,timestamp);
+                xmlFileManager.agregarMensaje(sender.nickname, chatMessage, timestamp);
                 break;
 
             case 6:
@@ -109,6 +114,7 @@ public class ChatServer {
                 String fileMessage = "6|" + sender.getNickname() + "|" + parts[2] + "|" + fileType + "|" + fileContent;
                 broadcastMessage(fileMessage,sender);
                 messageFileManager.addMessage(sender.getNickname(),fileContent,parts[2],FileType.valueOf(fileType));
+                xmlFileManager.agregarArchivo(sender.getNickname(), fileContent, fileMessage);
                 break;
 
             case 7:
@@ -119,6 +125,7 @@ public class ChatServer {
                 sender.stopClient();
                 sender.interrupt();
                 clients.remove(sender);
+                xmlFileManager.agregarUsuarioConectado(sender.getNickname());
                 break;
 
             default:

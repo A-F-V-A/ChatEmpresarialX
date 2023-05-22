@@ -1,29 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <serverData>
+  <connections>
     <connections>
-        <connections>
-            <username></username>
-            <timestamp></timestamp>
-        </connections>
+      <username />
+      <timestamp />
     </connections>
-    <messages>
-        <message>
-            <username></username>
-            <messageuser></messageuser>
-            <timestamp></timestamp>
-        </message>
-    </messages>
-    <files>
-        <file>
-            <username></username>
-            <fileuser></fileuser>
-            <timestamp></timestamp>
-        </file>
-    </files>
-    <loggedinusers>
-        <loggedinuser>
-            <username></username>
-            <log></log>
-        </loggedinuser>
-    </loggedinusers>
+    <connection>
+      <username>juan</username>
+    </connection>
+    <connection>
+      <username>juan</username>
+    </connection>
+  </connections>
+  <messages>
+    <message>
+      <username />
+      <messageuser />
+      <timestamp />
+    </message>
+    <message>
+      <username>juan</username>
+      <messageuser>olo</messageuser>
+      <timestamp>22/05/2023 16:31</timestamp>
+    </message>
+    <message>
+      <username>juan</username>
+      <messageuser>como estas</messageuser>
+      <timestamp>22/05/2023 16:31</timestamp>
+    </message>
+    <message>
+      <username>juan</username>
+      <messageuser>bien y tu</messageuser>
+      <timestamp>22/05/2023 16:31</timestamp>
+    </message>
+    <message>
+      <username>juan</username>
+      <messageuser>adios</messageuser>
+      <timestamp>22/05/2023 16:31</timestamp>
+    </message>
+  </messages>
+  <files>
+    <file>
+      <username />
+      <fileuser />
+      <timestamp />
+    </file>
+  </files>
+  <loggedinusers>
+    <loggedinuser>
+      <username />
+      <log />
+    </loggedinuser>
+  </loggedinusers>
 </serverData>
