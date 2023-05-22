@@ -26,6 +26,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 
+import static com.business.client.util.ChatConnection.sendData;
+
 public class ChatController {
 
     /* Field to store the reference to the Stage */
@@ -71,13 +73,18 @@ public class ChatController {
         if(!text.isEmpty()){
 
             Message newMessage = new Message(chat.getNickname(),text);
-            System.out.println(newMessage.toString());
             messageContainer.getChildren().add(ChatView.Message(newMessage));
             I_newMessage.setText("");
             // Scroll to bottom
             scrollPane.applyCss();
             scrollPane.layout();
             scrollPane.setVvalue(1.0);
+
+            try {
+                sendData(newMessage.toString(),chat);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
 
     }
@@ -101,6 +108,10 @@ public class ChatController {
         scrollPane.layout();
         scrollPane.setVvalue(1.0);
 
+
+        sendData(newFile.toString(),chat);
+
+
     } catch (Exception err) {
         System.err.println(err);
     }
@@ -123,6 +134,9 @@ public class ChatController {
             if(newChat != null){
                 chat = newChat;
 
+                Thread HiloChat = new Thread(chat);
+                HiloChat.start();
+
                 B_sendFIle.setDisable(false);
                 B_sendFIle.setMouseTransparent(false);
                 B_sendFIle.setCursor(Cursor.HAND);
@@ -132,10 +146,8 @@ public class ChatController {
                 B_sendMessage.setDisable(false);
                 B_sendMessage.setMouseTransparent(false);
                 B_sendMessage.setCursor(Cursor.HAND);
-
                 B_connect.setDisable(true);
 
-                System.out.println(chat.connectSession());
             }
         } catch (IOException ex) {
             throw new RuntimeException(ex);

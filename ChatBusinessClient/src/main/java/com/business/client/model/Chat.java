@@ -1,26 +1,34 @@
 package com.business.client.model;
 
 
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Chat {
+public class Chat implements Runnable{
 
     private int port;
     private String serverAddress;
     private String nickname;
+    private boolean  running;
+
+    private Socket connection;
     private List<Message> messageList;
     private List<ChatFile> chatFileList;
     private List<String> userList;
 
-    public Chat(int port, String serverAddress, String nickname) {
+    public Chat(int port, String serverAddress, String nickname) throws IOException {
         this.port = port;
         this.serverAddress = serverAddress;
         this.nickname = nickname;
-        messageList = new ArrayList<>();
-        chatFileList = new ArrayList<>();
-        userList = new ArrayList<>();
+        this.messageList = new ArrayList<>();
+        this.chatFileList = new ArrayList<>();
+        this.userList = new ArrayList<>();
+        this.connection = new Socket(this.serverAddress, this.port);
+        this.running = true;
     }
 
     public void addMessage(Message message) {
@@ -59,6 +67,10 @@ public class Chat {
         return serverAddress;
     }
 
+    public Socket getConnection() {
+        return connection;
+    }
+
     public String connectSession(){
         return CommunicationCode.ESTABLISH_CONNECTION.getCode() +'|'+ nickname;
     }
@@ -71,4 +83,22 @@ public class Chat {
         return CommunicationCode.CLOSE_SESSION.getCode() +'|'+ nickname;
     }
 
+    @Override
+    public void run() {
+        try {
+            DataInputStream inputConnection = new DataInputStream(connection.getInputStream());
+            System.out.println("Inicio la escucha");
+            while (running) {
+                // Lee la respuesta del servidor
+                String respuesta = inputConnection.readUTF();
+
+                // Procesa la respuesta recibida, por ejemplo, imprímela en la consola
+                System.out.println("Respuesta del servidor: " + respuesta);
+            }
+            connection.close();
+            // Cierra la conexión después de detener el hilo de escucha
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

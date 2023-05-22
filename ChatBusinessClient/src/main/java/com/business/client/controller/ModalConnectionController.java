@@ -10,6 +10,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
+import static com.business.client.util.ChatConnection.sendData;
+
 public class ModalConnectionController {
 
     @FXML
@@ -25,16 +31,20 @@ public class ModalConnectionController {
     private Chat newChat;
 
     @FXML
-    protected void startConnection(ActionEvent e){
+    protected void startConnection(ActionEvent e) {
+        /*192.168.1.14*/
         String nickname = this.I_nickname.getText();
         String serverAddress = this.I_serverAddress.getText();
         int port =  Integer.parseInt(this.I_port.getText());
 
-        newChat = new Chat(port,serverAddress, nickname);
-
-        Stage stage = (Stage) this.B_connect.getScene().getWindow();
-        stage.close();
-
+        try {
+            newChat = new Chat(port,serverAddress, nickname);
+            sendData(newChat.connectSession(),newChat);
+            Stage stage = (Stage) this.B_connect.getScene().getWindow();
+            stage.close();
+        }catch (IOException err){
+            System.err.println(err.getMessage());
+        }
     }
 
     @FXML

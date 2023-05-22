@@ -1,8 +1,5 @@
 package com.business.client.model;
 
-
-import static com.business.client.util.ValidateFile.getFileExtension;
-
 public enum FileType {
     PDF("pdf"),
     JPG("jpg"),
