@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serverData>
+    <connections>
+        <connections>
+            <username></username>
+            <timestamp></timestamp>
+        </connections>
+    </connections>
+    <messages>
+        <message>
+            <username></username>
+            <messageuser></messageuser>
+            <timestamp></timestamp>
+        </message>
+    </messages>
+    <files>
+        <file>
+            <username></username>
+            <fileuser></fileuser>
+            <timestamp></timestamp>
+        </file>
+    </files>
+    <loggedinusers>
+        <loggedinuser>
+            <username></username>
+            <log></log>
+        </loggedinuser>
+    </loggedinusers>
+</serverData>
