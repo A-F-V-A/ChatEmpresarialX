@@ -24,8 +24,18 @@ import java.util.Arrays;
 
 import static com.business.client.util.ValidateFile.base64ToFile;
 
+
+/**
+ * Clase que construye la interfaz de usuario de la vista del chat en la aplicación de cliente.
+ */
 public class ChatView {
-    public static VBox Message(Message message){
+    /**
+     * Construye un componente de mensaje para mostrar en la vista del chat.
+     *
+     * @param message El mensaje a mostrar.
+     * @return El componente VBox del mensaje.
+     */
+    public static VBox Message(Message message,boolean flag){
 
         /* nickname */
         Label nickname = new Label(message.getNickname());
@@ -47,7 +57,10 @@ public class ChatView {
 
         /* main container */
         VBox messageComponent = new VBox();
-        messageComponent.getStyleClass().add("message-component");
+        if(!flag)
+           messageComponent.getStyleClass().add("message-component");
+        else
+            messageComponent.getStyleClass().add("message-component-propio");
 
         VBox.setMargin(messageComponent, new Insets(0, 0, 10, 0)); // Add bottom margin of 10 pixels
         VBox.setVgrow(messageText, Priority.ALWAYS);
@@ -57,7 +70,14 @@ public class ChatView {
         return messageComponent;
     }
 
-    public static VBox MessageFile(ChatFile chatFile) throws IOException {
+    /**
+     * Construye un componente de archivo de mensaje para mostrar en la vista del chat.
+     *
+     * @param chatFile El archivo de mensaje a mostrar.
+     * @return El componente VBox del archivo de mensaje.
+     * @throws IOException Si ocurre un error al procesar el archivo.
+     */
+    public static VBox MessageFile(ChatFile chatFile, boolean flag) throws IOException {
         /* nickname */
         Label nickname = new Label(chatFile.getNickname());
         nickname.getStyleClass().add("message-text-nickname");
@@ -78,7 +98,8 @@ public class ChatView {
                 byte[] pdfBytes = base64ToFile(chatFile.getReadFileContents());
                 String fileName = "src/main/resources/com/business/client/file/" + chatFile.getNickname() + ".pdf";
 
-                Button pdfButton = new Button("Open PDF");
+                Button pdfButton = new Button("Descargar PDF");
+                pdfButton.getStyleClass().add("pdf-button");
                 pdfButton.setUserData(pdfBytes); // Asocia los bytes del PDF al botón
 
                 pdfButton.setOnAction(event -> {
@@ -91,12 +112,14 @@ public class ChatView {
                     } catch (IOException e) {
                         System.out.println("Error saving PDF: " + e.getMessage());
                     }
-                    //System.out.println(Arrays.toString(storedBytes));
                 });
 
                 /* main container */
                 VBox messageComponent = new VBox();
-                messageComponent.getStyleClass().add("message-component");
+                if(!flag)
+                    messageComponent.getStyleClass().add("message-component");
+                else
+                    messageComponent.getStyleClass().add("message-component-propio");
                 VBox.setMargin(messageComponent, new Insets(0, 0, 10, 0));
                 messageComponent.getChildren().addAll(topHBox, pdfButton);
                 return messageComponent;
@@ -110,7 +133,10 @@ public class ChatView {
 
                 /* main container */
                 VBox messageComponentImage = new VBox();
-                messageComponentImage.getStyleClass().add("message-component");
+                if(!flag)
+                    messageComponentImage.getStyleClass().add("message-component");
+                else
+                    messageComponentImage.getStyleClass().add("message-component-propio");
 
                 VBox.setMargin(messageComponentImage, new Insets(0, 0, 10, 0)); // Add bottom margin of 10 pixels
                 VBox.setVgrow(imageView, Priority.ALWAYS);
@@ -119,6 +145,12 @@ public class ChatView {
         }
     }
 
+    /**
+     * Construye un componente de conexión de usuario para mostrar en la vista del chat.
+     *
+     * @param nickName El nombre de usuario conectado.
+     * @return El componente HBox de conexión de usuario.
+     */
     public  static  HBox UserConnect(String nickName){
 
         HBox hbox = new HBox(); // Crear el HBox contenedor

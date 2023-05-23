@@ -23,6 +23,11 @@ public class ModalConnectionController {
     private Button B_cancel;
     private Chat newChat;
 
+    /**
+     * Maneja el evento de iniciar la conexión.
+     *
+     * @param e El evento del botón
+     */
     @FXML
     protected void startConnection(ActionEvent e) {
         /*192.168.1.14*/
@@ -39,6 +44,11 @@ public class ModalConnectionController {
         }
     }
 
+    /**
+     * Maneja el evento de cancelar la conexión.
+     *
+     * @param e El evento del botón
+     */
     @FXML
     protected void cancelConnection(ActionEvent e){
         newChat = null;
@@ -46,6 +56,11 @@ public class ModalConnectionController {
         stage.close();
     }
 
+    /**
+     * Obtiene el objeto Chat generado en la ventana modal.
+     *
+     * @return El objeto Chat
+     */
     public Chat getNewChat() {
         return newChat;
     }

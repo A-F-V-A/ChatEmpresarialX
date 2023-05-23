@@ -5,6 +5,11 @@
     -fx-padding: 3px;
 }
 
+.message-component-propio {
+    -fx-background-color: #d1eaff;
+    -fx-padding: 3px;
+}
+
 .message-text-nickname{
     -fx-font-size: 10px;
     -fx-font-weight: bold;
@@ -117,4 +122,17 @@
     -fx-max-height: 10px; /* Altura máxima del círculo */
     -fx-effect: dropshadow(gaussian, #00ff00, 3, 0, 0, 0);
 
+}
+
+.pdf-button {
+    -fx-background-color: #4CAF50; /* Color de fondo */
+    -fx-text-fill: white; /* Color del texto */
+    -fx-font-size: 14px; /* Tamaño de fuente */
+    -fx-padding: 10px 20px; /* Relleno interno */
+    -fx-background-radius: 5px; /* Bordes redondeados */
+    -fx-margin: 5px 0; /* Margen superior e inferior */
+}
+
+.pdf-button:hover {
+    -fx-background-color: #45a049; /* Color de fondo al pasar el ratón */
 }
