@@ -59,43 +59,12 @@ public class ChatServer {
 
                 ClientHandler client = new ClientHandler(socket);
                 clients.add(client);
-                iniciarTemporizador(socket);
                 client.start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
         }
-    }
-
-    /**
-     * Método para iniciar el temporizador de inactividad para un cliente.
-     *
-     * @param socket Socket del cliente.
-     */
-    private void iniciarTemporizador(Socket socket) {
-        TimerTask task = new TimerTask() {
-
-            @Override
-            public void run() {
-                try {
-                    ClientHandler client = new ClientHandler(socket);
-                    System.out.println("Tiempo de inactividad alcanzado. Cerrando conexión: " + socket);
-                    socket.close();
-                    clients.remove(client);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }finally {
-                    processMessage("7|", null);
-                }
-            }
-        };
-        // Establecer el tiempo límite de inactividad en milisegundos
-        long tiempoLimite = 60000; // 1 minuto
-
-        // Crear un temporizador y programar la tarea de cierre
-        Timer timer = new Timer();
-        timer.schedule(task, tiempoLimite);
     }
 
     /**
@@ -215,8 +184,7 @@ public class ChatServer {
         private BufferedReader reader;
         private PrintWriter writer;
         private String nickname;
-        private ScheduledExecutorService executor;
-        private ScheduledFuture<?> temporizador;
+        private boolean isConnected = true;
 
         /**
          * Constructor de la clase ClientHandler.
@@ -239,14 +207,16 @@ public class ChatServer {
         public void run() {
             try {
                 String message;
-                while ((message = reader.readLine()) != null) {
+                while (isConnected && (message = reader.readLine()) != null) {
                     processMessage(message, this);
-                    reiniciarTemporizador(socket);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
                 // Lógica para cerrar el cliente y los recursos relacionados
+                sendMessage("07");
+                processMessage("07", this);
+
                 try {
                     if (reader != null) {
                         reader.close();
@@ -257,42 +227,11 @@ public class ChatServer {
                     if (socket != null) {
                         socket.close();
                     }
-                    // Reiniciar el temporizador de inactividad
-                    processMessage("7|", this);
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-        }
-
-        /**
-         * Método para reiniciar el temporizador de inactividad.
-         */
-        private void reiniciarTemporizador(Socket socket) {
-            if (executor == null) {
-                executor = Executors.newSingleThreadScheduledExecutor();
-            } else {
-                // Cancelar la tarea anterior si existe
-                if (temporizador != null) {
-                    temporizador.cancel(false);
-                }
-            }
-
-            // Establecer el tiempo límite de inactividad en segundos
-            long tiempoLimite = 60; // 1 minuto
-
-            temporizador = executor.schedule(() -> {
-                try {
-                    ClientHandler client = new ClientHandler(socket);
-                    System.out.println("Tiempo de inactividad alcanzado. Cerrando conexión: " + socket);
-                    socket.close();
-                    clients.remove(client);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }, tiempoLimite, TimeUnit.SECONDS);
         }
 
         /**
@@ -302,6 +241,13 @@ public class ChatServer {
          */
         public void sendMessage(String message) {
             writer.println(message);
+        }
+
+        public void disconnectClient() {
+            if (isConnected) {
+                sendMessage("7|" + nickname);
+                isConnected = false;
+            }
         }
 
         /**
