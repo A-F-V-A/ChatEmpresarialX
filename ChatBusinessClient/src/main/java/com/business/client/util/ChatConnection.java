@@ -182,6 +182,10 @@ public class ChatConnection {
 
                 break;
 
+            case 7:
+                drawMessage.closeConnectionForce();
+                break;
+
             default:
                 // Código de mensaje inválido
                 break;

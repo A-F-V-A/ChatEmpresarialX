@@ -298,6 +298,17 @@ public class ChatController {
         });
     }
 
+    public void closeConnectionForce(){
+        Platform.runLater(() -> {
+            System.out.println("Connection Finality");
+            chat.getConnection().disconnect(chat.signOff());
+            B_connect.setDisable(false);
+            setVisual(true);
+            messageContainer.getChildren().clear();
+            vbox.getChildren().clear();
+        });
+    }
+
     /**
      * Muestra una alerta con el tipo, mensaje y duración especificados.
      *
