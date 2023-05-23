@@ -1,0 +1,6 @@
+module:com.business.client.chatbusinessclient
+com.business.client
+com.business.client.controller
+com.business.client.model
+com.business.client.util
+com.business.client.view
