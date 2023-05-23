@@ -7,6 +7,8 @@ import org.jdom2.output.XMLOutputter;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class XMLFileManager {
 
@@ -23,13 +25,18 @@ public class XMLFileManager {
      */
     public void agregarConexion(String username) {
         try {
+
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String timestamp = now.format(formatter);
+
             Document document = cargarDocumentoXML();
 
             Element connectionsElement = document.getRootElement().getChild("connections");
 
             Element connectionElement = new Element("connection");
             connectionElement.addContent(new Element("username").setText(username));
-//            connectionElement.addContent(new Element("timestamp").setText(timestamp));
+            connectionElement.addContent(new Element("timestamp").setText(timestamp));
 
             connectionsElement.addContent(connectionElement);
 
@@ -74,10 +81,14 @@ public class XMLFileManager {
      *
      * @param username El nombre de usuario del archivo.
      * @param fileUser El nombre del archivo.
-     * @param timestamp El timestamp del archivo.
      */
-    public void agregarArchivo(String username, String fileUser, String timestamp) {
+    public void agregarArchivo(String username, String fileUser) {
         try {
+
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String timestamp = now.format(formatter);
+
             Document document = cargarDocumentoXML();
 
             Element filesElement = document.getRootElement().getChild("files");
@@ -105,19 +116,25 @@ public class XMLFileManager {
      */
     public void agregarUsuarioConectado(String username) {
         try {
+
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String timestamp = now.format(formatter);
+
+
             Document document = cargarDocumentoXML();
 
             Element loggedInUsersElement = document.getRootElement().getChild("loggedinusers");
 
             Element loggedInUserElement = new Element("loggedinuser");
             loggedInUserElement.addContent(new Element("username").setText(username));
-//            loggedInUserElement.addContent(new Element("log").setText(log));
+            loggedInUserElement.addContent(new Element("log").setText(timestamp));
 
             loggedInUsersElement.addContent(loggedInUserElement);
 
             guardarDocumentoXML(document);
 
-            System.out.println("Usuario conectado agregado exitosamente al archivo XML.");
+            System.out.println("Usuario desconectado agregado exitosamente al archivo XML.");
         } catch (Exception e) {
             e.printStackTrace();
         }

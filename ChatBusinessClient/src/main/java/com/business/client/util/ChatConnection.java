@@ -149,6 +149,10 @@ public class ChatConnection {
      * @param message El mensaje recibido del servidor.
      */
     private void  typeMessage(String message){
+        if (message == null) {
+            System.out.println("Se ha desconectado por inactividad");
+        }
+
         String[] parts = message.split("\\|");
         int code = Integer.parseInt(parts[0]);
         switch (code) {
